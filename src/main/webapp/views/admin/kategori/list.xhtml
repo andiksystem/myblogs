@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Kategori</title>
+        <h:outputStylesheet library="css" name="main.css"/>
+        <h:outputStylesheet library="css" name="primeflex.min.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="mainForm">
+
+            <p:outputPanel id="container" styleClass="container">
+                <div class="title">
+                    Kategori
+                </div>
+
+                <div class="toolbar">
+
+                    <p:inputText placeholder="Ketik nama kategori"/>
+
+                    <p:commandButton icon="pi pi-search"
+                                     styleClass="p-ml-2"/>
+
+                    <p:button value="Tambah"
+                              styleClass="p-ml-2"/>
+
+                </div>
+
+                <div class="content">
+                    <p:dataTable id="dataTable"
+                                 value="#{kategoriList.kategoris}"
+                                 var="kat">
+
+                        <p:column headerText="Nama Kategori">
+                            <h:outputText value="#{kat.nama}"/>
+                        </p:column>
+
+                        <p:column headerText="Waktu Dibuat">
+                            <h:outputText value="#{kat.waktuDibuat}">
+                                <f:convertDateTime locale="id" pattern="dd MMMMM yyyy HH:mm"/>                            
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Aksi">
+                            Edit | Hapus
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+            </p:outputPanel>
+
+        </h:form>
+    </h:body>
+</html>
+
