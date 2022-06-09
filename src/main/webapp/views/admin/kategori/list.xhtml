@@ -18,14 +18,8 @@
                 </div>
 
                 <div class="toolbar">
-
-                    <p:inputText placeholder="Ketik nama kategori"/>
-
-                    <p:commandButton icon="pi pi-search"
-                                     styleClass="p-ml-2"/>
-
                     <p:button value="Tambah"
-                              styleClass="p-ml-2"/>
+                              outcome="create.xhtml"/>
 
                 </div>
 
@@ -45,7 +39,13 @@
                         </p:column>
 
                         <p:column headerText="Aksi">
-                            Edit | Hapus
+                            <p:link outcome="edit.xhtml" value="Edit">
+                                <f:param name="id" value="#{kat.id}"/>
+                            </p:link>
+                            | 
+                            <p:commandLink value="Hapus"
+                                           actionListener="#{kategoriList.remove(kat)}"
+                                           update="dataTable"/>
                         </p:column>
 
                     </p:dataTable>

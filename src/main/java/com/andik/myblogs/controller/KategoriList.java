@@ -55,4 +55,9 @@ public class KategoriList implements Serializable {
         this.filterText = filterText;
     }
     
+    public void remove(Kategori kategori) {
+        kategoriService.remove(kategori);
+        kategoris.remove(kategori);
+    }
+    
 }
