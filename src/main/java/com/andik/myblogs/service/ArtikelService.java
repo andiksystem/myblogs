@@ -29,8 +29,8 @@ public class ArtikelService {
     public List<Artikel> findRange(String filterText, int page, int limit) {
         return em.createQuery("SELECT k FROM Artikel k WHERE LOWER(k.judul) LIKE LOWER(:filterText) ORDER BY k.judul ASC")
                 .setParameter("filterText", "%" + filterText + "%")
-                .setFirstResult(page)
-                .setMaxResults(page * limit)
+                .setFirstResult(page * limit)
+                .setMaxResults(limit)
                 .getResultList();
     }
     

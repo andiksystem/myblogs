@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Artikel</title>
+        <h:outputStylesheet library="css" name="main.css"/>
+        <h:outputStylesheet library="css" name="primeflex.min.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="mainForm">
+
+            <p:outputPanel id="container" styleClass="container">
+                <div class="title">
+                    Artikel
+                </div>
+
+                <div class="toolbar">
+                    <p:inputText value="#{artikelList.filterText}"
+                                 placeholder="Ketik kata kunci"/>
+                    
+                    <p:commandButton actionListener="#{artikelList.search()}"
+                                     update=":mainForm:dataTable"
+                                     value="Cari"
+                                     icon="pi pi-search"/>
+                    
+                    <p:button value="Tambah"
+                              outcome="create.xhtml"
+                              style="margin-left: 16px;"/>
+
+                </div>
+
+                <div class="content">
+                    <p:dataTable id="dataTable"
+                                 value="#{artikelList.artikels}"
+                                 var="kat">
+
+                        <p:column headerText="Judul">
+                            <h:outputText value="#{kat.judul}"/><br/>
+                            <h:outputText value="#{kat.kategori.nama}"
+                                          style="font-size: 12px; color: #666666;"/>
+                        </p:column>
+
+                        <p:column headerText="Isi">
+                            <h:outputText value="#{kat.isi}"/>
+                        </p:column>
+
+                        <p:column headerText="Waktu Dibuat"
+                                  style="width: 160px;">
+                            <h:outputText value="#{kat.waktuDibuat}">
+                                <f:convertDateTime locale="id" pattern="dd MMMMM yyyy HH:mm"/>                            
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Aksi" style="width: 140px; text-align: center;">
+                            <p:link outcome="edit.xhtml" value="Edit">
+                                <f:param name="id" value="#{kat.id}"/>
+                            </p:link>
+                            | 
+                            <p:commandLink value="Hapus"
+                                           actionListener="#{artikelList.remove(kat)}"
+                                           update="dataTable"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    
+                    <div style="text-align: right; padding: 16px;">
+                        <p:commandButton value="Load More"
+                                         actionListener="#{artikelList.loadMore()}"
+                                         update=":mainForm:dataTable"/>
+                    </div>
+                </div>
+            </p:outputPanel>
+
+        </h:form>
+    </h:body>
+</html>
+
