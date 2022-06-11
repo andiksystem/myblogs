@@ -4,8 +4,8 @@
  */
 package com.andik.myblogs.controller;
 
-import com.andik.myblogs.entity.Kategori;
-import com.andik.myblogs.service.KategoriService;
+import com.andik.myblogs.entity.Artikel;
+import com.andik.myblogs.service.ArtikelService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,31 +20,41 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class KategoriList implements Serializable {
+public class ArtikelList implements Serializable {
     
     @EJB
-    private KategoriService kategoriService;
+    private ArtikelService artikelService;
     
-    private List<Kategori> kategoris;
+    private List<Artikel> artikels;
 
+    private int page;
+    private int limit;
     private String filterText;
     
     @PostConstruct
     public void init() {
+        page = 0;
+        limit = 25;
         filterText = "";
         load();
     }
     
     public void load() {
-        kategoris = kategoriService.findAll();
+        artikels = artikelService.findRange(filterText, page, limit);
     }
     
     public void search() {
+        page = 0;
         load();
     }
+    
+    public void loadMore() {
+        page++;
+        artikels.addAll(artikelService.findRange(filterText, page, limit));
+    }
 
-    public List<Kategori> getKategoris() {
-        return kategoris;
+    public List<Artikel> getArtikels() {
+        return artikels;
     }
 
     public String getFilterText() {
@@ -55,9 +65,9 @@ public class KategoriList implements Serializable {
         this.filterText = filterText;
     }
     
-    public void remove(Kategori kategori) {
-        kategoriService.remove(kategori);
-        kategoris.remove(kategori);
+    public void remove(Artikel artikel) {
+        artikelService.remove(artikel);
+        artikels.remove(artikel);
     }
     
 }
