@@ -37,13 +37,11 @@
                                  var="kat">
 
                         <p:column headerText="Judul">
-                            <h:outputText value="#{kat.judul}"/><br/>
+                            <p:link outcome="detail.xhtml" value="#{kat.judul}">
+                                <f:param name="id" value="#{kat.id}"/>
+                            </p:link><br/>
                             <h:outputText value="#{kat.kategori.nama}"
                                           style="font-size: 12px; color: #666666;"/>
-                        </p:column>
-
-                        <p:column headerText="Isi">
-                            <h:outputText value="#{kat.isi}"/>
                         </p:column>
 
                         <p:column headerText="Waktu Dibuat"

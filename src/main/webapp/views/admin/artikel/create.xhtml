@@ -17,35 +17,54 @@
                 </div>
 
                 <div class="content">
-                    <h:panelGrid columns="2"
-                                 styleClass="ui-fluid"
-                                 style="width: 100%;">
-                        
-                        <p:outputLabel for="judul" value="Judul"/>
-                        <p:inputText id="judul" placeholder="Ketik judul artikel"
-                                     value="#{artikelCreate.artikel.judul}"/>
-                        
-                        <p:outputLabel for="kategori" value="Kategori"/>
-                        <p:selectOneMenu id="kategori" 
-                                         value="#{artikelCreate.artikel.kategori}"
-                                         converter="entityConverter">
-                            <f:selectItems value="#{artikelCreate.kategoris}"
-                                           var="kat"
-                                           itemValue="#{kat}"
-                                           itemLabel="#{kat.nama}"/>
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel for="isi" value="Isi"/>
-                        <p:inputTextarea id="isi"
-                                         value="#{artikelCreate.artikel.isi}"
-                                         rows="6"
-                                         placeholder="Ketik isi artikel"/>
-                        
-                        <h:outputText/>
-                        <p:commandButton value="Simpan"
-                                         action="#{artikelCreate.save()}"/>
-                        
-                    </h:panelGrid>
+                    <div class="content-body p-shadow-1">
+                        <h:panelGrid columns="2"
+                                     styleClass="ui-fluid"
+                                     style="width: 100%;">
+
+                            <p:outputLabel for="judul" value="Judul"/>
+                            <p:inputText id="judul" placeholder="Ketik judul artikel"
+                                         value="#{artikelCreate.artikel.judul}"/>
+
+                            <p:outputLabel for="kategori" value="Kategori"/>
+                            <p:selectOneMenu id="kategori" 
+                                             value="#{artikelCreate.artikel.kategori}"
+                                             converter="entityConverter">
+                                <f:selectItems value="#{artikelCreate.kategoris}"
+                                               var="kat"
+                                               itemValue="#{kat}"
+                                               itemLabel="#{kat.nama}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="cover" value="Cover Gambar"/>
+                            <p:fileUpload id="cover" 
+                                          value="#{artikelCreate.uploadedFile}"
+                                          listener="#{artikelCreate.handleUpload}"
+                                          skinSimple="true"
+                                          mode="simple"
+                                          auto="true"
+                                          update=":mainForm:imagePanel"/>
+                            
+                            <h:outputText/>
+                            <p:outputPanel id="imagePanel">
+                                <p:graphicImage value="#{imageStreamer.file}"
+                                                styleClass="gambar-cover"
+                                                rendered="#{artikelCreate.artikel.gambar != null}">
+                                    <f:param name="filename" value="#{artikelCreate.artikel.gambar}"/>
+                                </p:graphicImage>
+                            </p:outputPanel>
+
+                            <p:outputLabel for="isi" value="Isi"/>
+                            <p:textEditor id="isi"
+                                          value="#{artikelCreate.artikel.isi}"
+                                          height="600"/>
+
+                            <h:outputText/>
+                            <p:commandButton value="Simpan"
+                                             action="#{artikelCreate.save()}"/>
+
+                        </h:panelGrid>
+                    </div>
                 </div>
             </p:outputPanel>
         </ui:define>
