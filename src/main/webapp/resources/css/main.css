@@ -68,6 +68,11 @@ body {
     margin: 16px 32px;
 }
 
+.content-body {
+    padding: 32px;
+    background-color: #fff;
+}
+
 .menu.ui-menu.ui-widget.ui-widget-content {
     width: 180px!important;
     border-radius: 0!important;
