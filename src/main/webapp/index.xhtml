@@ -1,12 +1,63 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <h1>Hello World</h1>
-    </h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:composition template="/resources/tpl/public.xhtml">
+        <ui:define name="title">
+            <title>Home</title>
+        </ui:define>
+
+        <ui:define name="content">
+            <p:outputPanel id="main" styleClass="main">
+                <h1>Home</h1>
+                
+                <div style="margin-bottom: 16px;">
+                    <p:inputText value="#{homeController.filterText}"
+                                 placeholder="Ketik judul artikel"/>
+                    <p:commandButton value="Cari"
+                                     icon="pi pi-search"
+                                     actionListener="#{homeController.search()}"
+                                     update=":mainForm:listPanel"
+                                     styleClass="p-ml-2"/>
+                </div>
+
+                <h3>#{homeController.selectedKategori != null ? homeController.selectedKategori.nama : 'Semua Artikel'}</h3>
+                <p:outputPanel id="listPanel" styleClass="list-panel">
+                    <p:repeat value="#{homeController.artikels}"
+                              var="artikel">
+
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <p:graphicImage value="#{imageStreamer.file}"
+                                                rendered="#{artikel.gambar != null}"
+                                                styleClass="thumb">
+                                    <f:param name="filename" value="#{artikel.gambar}"/>
+                                </p:graphicImage>
+                            </div>
+                            <div class="p-col-12 p-md-8">
+                                <div>
+                                    <h3 class="thumb-judul-artikel">#{artikel.judul}</h3>
+                                    <h:outputText value="#{homeController.getSubText(artikel.isi)}" escape="false"/>
+                                </div>
+                            </div>
+                        </div>
+                        <p:divider/>
+                    </p:repeat>
+                </p:outputPanel>
+                
+                <div style="padding: 16px; text-align: right;">
+                    <p:commandButton value="Load More"
+                                     actionListener="#{homeController.loadMore()}"
+                                     update=":mainForm:listPanel"/>
+                </div>
+            </p:outputPanel>
+        </ui:define>
+    </ui:composition>
+
 </html>
 

@@ -5,6 +5,7 @@
 package com.andik.myblogs.service;
 
 import com.andik.myblogs.entity.Artikel;
+import com.andik.myblogs.entity.Kategori;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +47,15 @@ public class ArtikelService {
     
     public void remove(Artikel artikel) {
         em.remove(em.merge(artikel));
+    }
+
+    public List<Artikel> findRange(String filterText, int page, int limit, Kategori selectedKategori) {
+        return em.createQuery("SELECT k FROM Artikel k WHERE k.kategori = :kategori AND LOWER(k.judul) LIKE LOWER(:filterText) ORDER BY k.judul ASC")
+                .setParameter("filterText", "%" + filterText + "%")
+                .setParameter("kategori", selectedKategori)
+                .setFirstResult(page * limit)
+                .setMaxResults(limit)
+                .getResultList();
     }
     
 }
