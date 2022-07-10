@@ -15,7 +15,7 @@
         <ui:define name="content">
             <p:outputPanel id="main" styleClass="main">
                 <h1>Home</h1>
-                
+
                 <div style="margin-bottom: 16px;">
                     <p:inputText value="#{homeController.filterText}"
                                  placeholder="Ketik judul artikel"/>
@@ -31,25 +31,35 @@
                     <p:repeat value="#{homeController.artikels}"
                               var="artikel">
 
-                        <div class="p-grid">
-                            <div class="p-col-12 p-md-4">
-                                <p:graphicImage value="#{imageStreamer.file}"
-                                                rendered="#{artikel.gambar != null}"
-                                                styleClass="thumb">
-                                    <f:param name="filename" value="#{artikel.gambar}"/>
-                                </p:graphicImage>
-                            </div>
-                            <div class="p-col-12 p-md-8">
-                                <div>
-                                    <h3 class="thumb-judul-artikel">#{artikel.judul}</h3>
-                                    <h:outputText value="#{homeController.getSubText(artikel.isi)}" escape="false"/>
+                        <div class="list-item p-shadow-4">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4">
+                                    <p:graphicImage value="#{imageStreamer.file}"
+                                                    rendered="#{artikel.gambar != null}"
+                                                    styleClass="thumb">
+                                        <f:param name="filename" value="#{artikel.gambar}"/>
+                                    </p:graphicImage>
+                                </div>
+                                <div class="p-col-12 p-md-8">
+                                    <div>
+                                        <h3 class="thumb-judul-artikel">
+                                            <p:link href="#{request.contextPath}/faces/detail.xhtml?artikelId=#{artikel.id}"
+                                                    value="#{artikel.judul}"/>
+                                        </h3>
+                                        <p class="thumb-waktu">
+                                            <h:outputText value="#{artikel.waktuDibuat}">
+                                                <f:convertDateTime locale="id"
+                                                                   pattern="EEEEE, dd MMMMM yyyy HH:mm"/>
+                                            </h:outputText>
+                                        </p>
+                                        <h:outputText value="#{homeController.getSubText(artikel.isi)}" escape="false"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <p:divider/>
                     </p:repeat>
                 </p:outputPanel>
-                
+
                 <div style="padding: 16px; text-align: right;">
                     <p:commandButton value="Load More"
                                      actionListener="#{homeController.loadMore()}"

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/resources/tpl/public.xhtml">
+        <ui:define name="title">
+            <title>#{homeDetailController.artikel.judul}</title>
+        </ui:define>
+
+        <ui:define name="content">
+            <p:outputPanel id="main" styleClass="main">
+                <h1 class="detail-title">#{homeDetailController.artikel.judul}</h1>
+                <p class="detail-waktu">
+                    <h:outputText value="#{homeDetailController.artikel.waktuDibuat}">
+                        <f:convertDateTime locale="id" pattern="EEEEE, dd MMMMM yyyy HH:mm"/>
+                    </h:outputText>
+                </p>
+
+                <div>
+                    <p:graphicImage value="#{imageStreamer.file}"
+                                    rendered="#{homeDetailController.artikel.gambar != null}"
+                                    styleClass="detail-image">
+                        <f:param name="filename" value="#{homeDetailController.artikel.gambar}"/>
+                    </p:graphicImage>
+                </div>
+
+                <h:outputText value="#{homeDetailController.artikel.isi}"
+                              escape="false"/>
+            </p:outputPanel>
+        </ui:define>
+    </ui:composition>
+</html>
+

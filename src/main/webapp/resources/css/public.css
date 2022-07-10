@@ -21,13 +21,13 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 300px;
+    width: 240px;
     bottom: 0;
     background-color: #ffffff;
 }
 
 .content {
-    margin-left: 300px;
+    margin-left: 240px;
 }
 
 .main {
@@ -39,13 +39,55 @@ body {
 }
 
 .thumb-judul-artikel {
-    font-size: 24px;
-    font-weight: 600;
     margin: 0;
-    margin-bottom: 16px;
+}
+
+.thumb-judul-artikel a {
+    font-size: 24px;
+    font-weight: 600;    
 }
 
 p {
     margin: 0;
     margin-bottom: 16px;
+}
+
+.ui-menu.sidebar-menu {
+    border: 0!important;
+    width: 100%;
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: 700;
+    padding: 16px;
+}
+
+.list-item {
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 32px;
+}
+
+.thumb-waktu {
+    margin: 0;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.detail-title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.detail-waktu {
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.detail-image {
+    margin-bottom: 16px;
+    max-width: 100%;
 }

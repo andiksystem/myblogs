@@ -16,27 +16,29 @@
         <h:form id="mainForm">
             <p:outputPanel id="wrapperPanel" styleClass="wrapper-panel">
 
-                <p:outputPanel id="sidebar" styleClass="sidebar">
+                <p:outputPanel id="sidebar" styleClass="sidebar p-shadow-8">
                     <div class="brand">
                         My Blogs
                     </div>
-                    <h1>Kategori</h1>
-
-                    <ul>
-                        <li>
-                            <a href="#{request.contextPath}">Semua Kategori</a>
-                        </li>
-                        <ui:repeat value="#{homeController.kategoris}"
-                                   var="kategori">
-                            <li>
-                                <a href="#{request.contextPath}/faces/index.xhtml?kategoriId=#{kategori.id}">
-                                    #{kategori.nama}
-                                </a>
-                            </li>
+                    
+                    <p:menu styleClass="sidebar-menu">
+                        
+                        <p:submenu label="Kategori">
+                            <p:menuitem url="#{request.contextPath}/faces/index.xhtml"
+                                        value="Semua Kategori"
+                                        icon="pi pi-th-large"/>
                             
-                        </ui:repeat>
-                    </ul>
-
+                            <c:forEach items="#{homeController.kategoris}"
+                                       var="kategori">
+                                <p:menuitem url="#{request.contextPath}/faces/index.xhtml?kategoriId=#{kategori.id}"
+                                            value="#{kategori.nama}"
+                                            icon="pi pi-tag"/>
+                            </c:forEach>
+                            
+                        </p:submenu>
+                        
+                    </p:menu>
+                    
                 </p:outputPanel>
 
                 <p:outputPanel id="content" styleClass="content">
