@@ -7,13 +7,15 @@ package com.andik.myblogs.controller;
 import com.andik.myblogs.entity.Pengguna;
 import com.andik.myblogs.service.PenggunaService;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,14 +25,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author andik
  */
 @Named
-@RequestScoped
-public class LoginController {
+@ViewScoped
+public class LoginController implements Serializable {
 
     @EJB
     private PenggunaService penggunaService;
 
     private String username;
     private String password;
+
+    private String ref;
+
+    @PostConstruct
+    public void init() {
+        ref = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ref");
+        if (ref == null) {
+            ref = "";
+        }
+
+    }
 
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -42,7 +55,7 @@ public class LoginController {
             if ("admin".equals(pengguna.getHakAkses())) {
                 context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + "/faces/views/admin/index.xhtml");
             } else {
-                context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath());                
+                context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + ref);
             }
 
         } catch (ServletException ex) {

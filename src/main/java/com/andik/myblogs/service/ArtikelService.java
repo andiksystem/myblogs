@@ -57,5 +57,15 @@ public class ArtikelService {
                 .setMaxResults(limit)
                 .getResultList();
     }
+
+    public Long countKomentar(Artikel artikel) {
+        try {
+            return (Long) em.createQuery("SELECT COUNT(k) FROM Komentar k WHERE k.artikel = :artikel")
+                    .setParameter("artikel", artikel)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return Long.valueOf(0);
+        }
+    }
     
 }

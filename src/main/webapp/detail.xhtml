@@ -11,24 +11,71 @@
         </ui:define>
 
         <ui:define name="content">
+            <p:growl showDetail="true" showSummary="true">
+                <p:autoUpdate/>
+            </p:growl>
             <p:outputPanel id="main" styleClass="main">
-                <h1 class="detail-title">#{homeDetailController.artikel.judul}</h1>
-                <p class="detail-waktu">
-                    <h:outputText value="#{homeDetailController.artikel.waktuDibuat}">
-                        <f:convertDateTime locale="id" pattern="EEEEE, dd MMMMM yyyy HH:mm"/>
-                    </h:outputText>
-                </p>
-
                 <div>
-                    <p:graphicImage value="#{imageStreamer.file}"
-                                    rendered="#{homeDetailController.artikel.gambar != null}"
-                                    styleClass="detail-image">
-                        <f:param name="filename" value="#{homeDetailController.artikel.gambar}"/>
-                    </p:graphicImage>
-                </div>
+                    <h1 class="detail-title">#{homeDetailController.artikel.judul}</h1>
+                    <p class="detail-waktu">
+                        <h:outputText value="#{homeDetailController.artikel.waktuDibuat}">
+                            <f:convertDateTime locale="id" pattern="EEEEE, dd MMMMM yyyy HH:mm"/>
+                        </h:outputText>
+                    </p>
 
-                <h:outputText value="#{homeDetailController.artikel.isi}"
-                              escape="false"/>
+                    <div>
+                        <p:graphicImage value="#{imageStreamer.file}"
+                                        rendered="#{homeDetailController.artikel.gambar != null}"
+                                        styleClass="detail-image">
+                            <f:param name="filename" value="#{homeDetailController.artikel.gambar}"/>
+                        </p:graphicImage>
+                    </div>
+
+                    <h:outputText value="#{homeDetailController.artikel.isi}"
+                                  escape="false"/>
+                </div>
+                <p:divider/>
+                <p:outputPanel id="komentarPanel"
+                               styleClass="komentar-panel">
+                    <h3 class="komentar-title">Komentar #{homeDetailController.jumlahKomentar}</h3>
+
+                    <p:outputPanel rendered="#{request.userPrincipal == null}">
+                        <p:button href="#{request.contextPath}/faces/login.xhtml?ref=/faces/detail.xhtml?artikelId=#{homeDetailController.artikel.id}"
+                                  value="Untuk mengirim komentar silakan login"/>
+                    </p:outputPanel>
+                    <p:outputPanel rendered="#{request.userPrincipal != null}">
+                        <div class="ui-fluid"
+                             style="margin-bottom: 16px;">
+                            <p:inputTextarea placeholder="Masukkan komentar"
+                                             value="#{homeDetailController.komentar.isiKomentar}"
+                                             rows="4"/>
+                        </div>
+                        <div>
+                            <p:commandButton value="Kirim Komentar"
+                                             actionListener="#{homeDetailController.simpanKomentar()}"
+                                             update=":mainForm:komentarPanel"/>
+                        </div>
+                    </p:outputPanel>
+                    
+                    <p:divider/>
+
+                    <div class="komentar">
+                        <p:repeat value="#{homeDetailController.komentars}"
+                                  var="komentar">
+                            <div class="item-komentar">
+                                <div class="item-komentar-pengirim">
+                                    #{komentar.pengguna.nama} |
+                                    <h:outputText value="#{komentar.waktuDibuat}">
+                                        <f:convertDateTime locale="id" pattern="dd MMMMM yyyy HH:mm"/>
+                                    </h:outputText>
+                                </div>
+                                <div class="item-komentar-isi">
+                                    #{komentar.isiKomentar}
+                                </div>
+                            </div>
+                        </p:repeat>
+                    </div>
+                </p:outputPanel>
             </p:outputPanel>
         </ui:define>
     </ui:composition>

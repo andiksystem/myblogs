@@ -29,6 +29,7 @@ public class KomentarService {
     
     public List<Komentar> findByArtikel(Artikel artikel) {
         return em.createQuery("SELECT k FROM Komentar k WHERE k.artikel = :artikel ORDER BY k.waktuDibuat DESC")
+                .setParameter("artikel", artikel)
                 .getResultList();
     }
     

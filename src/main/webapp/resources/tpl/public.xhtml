@@ -20,25 +20,44 @@
                     <div class="brand">
                         My Blogs
                     </div>
-                    
+
+                    <p:outputPanel id="userInfoPanel">
+                        <p:outputPanel rendered="#{request.userPrincipal != null}">
+                            <div class="user-info">
+                                <div class="user-info-icon">
+                                    <i class="pi pi-user"></i>
+                                </div>
+                                <div class="user-info-nama">
+                                    <h:outputText value="#{userInfo.currentUser.nama}"/>
+                                </div>
+                                <div class="user-info-logout">
+                                    <p:commandButton value="Logout"
+                                                     action="#{loginController.logout()}"
+                                                     styleClass="ui-button-flat ui-button-plain"/>
+                                </div>
+                            </div>
+                            <p:divider/>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
                     <p:menu styleClass="sidebar-menu">
-                        
+
                         <p:submenu label="Kategori">
                             <p:menuitem url="#{request.contextPath}/faces/index.xhtml"
                                         value="Semua Kategori"
                                         icon="pi pi-th-large"/>
-                            
+
                             <c:forEach items="#{homeController.kategoris}"
                                        var="kategori">
                                 <p:menuitem url="#{request.contextPath}/faces/index.xhtml?kategoriId=#{kategori.id}"
                                             value="#{kategori.nama}"
                                             icon="pi pi-tag"/>
                             </c:forEach>
-                            
+
                         </p:submenu>
-                        
+
                     </p:menu>
-                    
+
                 </p:outputPanel>
 
                 <p:outputPanel id="content" styleClass="content">

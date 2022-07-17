@@ -14,10 +14,10 @@
                 background-image: url('#{request.contextPath}/resources/img/bg-login.jpg');
             }
             
-            .login-form {
+            .signup-form {
                 background-color: #fff;
                 padding: 32px;
-                width: 300px;
+                width: 400px;
                 margin: 32px auto;
                 text-align: center;
                 border-radius: 16px;
@@ -27,10 +27,10 @@
     </h:head>
     <h:body>
         <h:form id="mainForm">
-            <div class="login-form ui-fluid p-shadow-1">
+            <div class="signup-form ui-fluid p-shadow-1">
                 <div>
-                    <h1>Login</h1>
-                    <p>Silakan masukkan username dan password anda</p>
+                    <h1>Daftar User Baru</h1>
+                    <p>Silakan masukkan data diri anda</p>
                 </div>
 
                 <p:messages showDetail="true" showSummary="true">
@@ -39,18 +39,35 @@
 
                 <div style="margin-bottom: 16px;">
                     <p:inputText placeholder="Username"
-                                 value="#{loginController.username}"/>
+                                 value="#{signUp.pengguna.id}"
+                                 required="true"
+                                 requiredMessage="Username harus diisi"/>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <p:inputText placeholder="Nama Lengkap"
+                                 value="#{signUp.pengguna.nama}"
+                                 required="true"
+                                 requiredMessage="Nama lengkap harus diisi"/>
                 </div>
 
                 <div style="margin-bottom: 16px;">
                     <p:password placeholder="Password"
-                                value="#{loginController.password}"/>
+                                value="#{signUp.password1}"
+                                required="true"
+                                requiredMessage="Password harus diisi"/>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <p:password placeholder="Ulangi password"
+                                value="#{signUp.password2}"
+                                required="true"
+                                requiredMessage="Ulangi password harus diisi"/>
                 </div>
 
                 <div>
                     <p:commandButton value="Login"
-                                     action="#{loginController.login()}"/><br/>
-                    Jika belum mempunyai user, silakan <p:link href="#{request.contextPath}/faces/signup.xhtml" value="daftar di sini"/>
+                                     action="#{signUp.save()}"/>
                 </div>
             </div>
         </h:form>

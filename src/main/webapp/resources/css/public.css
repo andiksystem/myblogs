@@ -61,6 +61,8 @@ p {
     font-size: 28px;
     font-weight: 700;
     padding: 16px;
+    text-align: center;
+    color: #0066cc;
 }
 
 .list-item {
@@ -90,4 +92,41 @@ p {
 .detail-image {
     margin-bottom: 16px;
     max-width: 100%;
+}
+
+.user-info {
+    text-align: center;
+}
+
+.user-info-icon i {
+    font-size: 64px;
+    color: #0066cc;
+    margin-bottom: 16px;
+}
+
+.user-info-nama {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0066cc;
+    margin-bottom: 16px;
+}
+
+.user-info-logout {
+    text-align: center;
+}
+
+.item-komentar {
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.item-komentar-pengirim {
+    font-size: 14px;
+    color: #0066cc;
+}
+
+.item-komentar-isi {
+    
 }
