@@ -56,13 +56,19 @@
                                              update=":mainForm:komentarPanel"/>
                         </div>
                     </p:outputPanel>
-                    
+
                     <p:divider/>
 
                     <div class="komentar">
                         <p:repeat value="#{homeDetailController.komentars}"
                                   var="komentar">
                             <div class="item-komentar">
+                                <div class="item-komentar-button">
+                                    <p:commandButton value="Jawab"
+                                                     actionListener="#{homeDetailController.createJawabanKomentar(komentar)}"
+                                                     update="jawabanKomentarPanel"
+                                                     rendered="#{request.userPrincipal != null}"/>
+                                </div>
                                 <div class="item-komentar-pengirim">
                                     #{komentar.pengguna.nama} |
                                     <h:outputText value="#{komentar.waktuDibuat}">
@@ -72,7 +78,46 @@
                                 <div class="item-komentar-isi">
                                     #{komentar.isiKomentar}
                                 </div>
+
                             </div>
+
+                            <p:outputPanel id="jawabanKomentarPanel"
+                                           styleClass="jawaban-komentar-panel">
+
+                                <p:repeat value="#{homeDetailController.jawabanMap.get(komentar.id)}"
+                                          var="jawaban">
+
+                                    <div class="item-jawaban">
+                                        <p:outputPanel rendered="#{jawaban.waktuDibuat != null}">
+                                            <div class="item-jawaban-pengirim">
+                                                #{jawaban.pengguna.nama} |
+                                                <h:outputText value="#{jawaban.waktuDibuat}">
+                                                    <f:convertDateTime locale="id" pattern="dd MMMMM yyyy HH:mm"/>
+                                                </h:outputText>
+                                            </div>
+                                            <div class="item-jawaban-isi">
+                                                #{jawaban.isiKomentar}
+                                            </div>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{jawaban.waktuDibuat == null}">
+                                            <div class="item-jawaban-input ui-fluid"
+                                                 style="margin-bottom: 16px;">
+                                                <p:inputTextarea value="#{jawaban.isiKomentar}"
+                                                                 rows="2"
+                                                                 placeholder="Ketik jawaban komentar"/>
+                                            </div>
+                                            <div style="text-align: right;">
+                                                <p:commandButton value="Simpan Jawaban"
+                                                                 actionListener="#{homeDetailController.simpanJawabanKomentar(jawaban)}"
+                                                                 update="@(.jawaban-komentar-panel), :mainForm:komentarPanel"/>
+                                            </div>
+                                        </p:outputPanel>
+                                    </div>
+
+                                </p:repeat>
+
+                            </p:outputPanel>
+
                         </p:repeat>
                     </div>
                 </p:outputPanel>

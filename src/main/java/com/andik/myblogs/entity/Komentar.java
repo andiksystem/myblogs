@@ -40,6 +40,10 @@ public class Komentar implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "isi_komentar")
     private String isiKomentar;
+    @Column(name = "jenis")
+    private Integer jenis;
+    @Column(name = "ref_komentar_id")
+    private String refKomentarId;
     @Column(name = "waktu_dibuat")
     @Temporal(TemporalType.TIMESTAMP)
     private Date waktuDibuat;
@@ -120,6 +124,22 @@ public class Komentar implements Serializable {
     @Override
     public String toString() {
         return "com.andik.myblogs.entity.Komentar[ id=" + id + " ]";
+    }
+
+    public Integer getJenis() {
+        return jenis;
+    }
+
+    public void setJenis(Integer jenis) {
+        this.jenis = jenis;
+    }
+
+    public String getRefKomentarId() {
+        return refKomentarId;
+    }
+
+    public void setRefKomentarId(String refKomentarId) {
+        this.refKomentarId = refKomentarId;
     }
     
 }

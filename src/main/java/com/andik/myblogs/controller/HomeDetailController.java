@@ -9,7 +9,10 @@ import com.andik.myblogs.entity.Komentar;
 import com.andik.myblogs.service.ArtikelService;
 import com.andik.myblogs.service.KomentarService;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -35,6 +38,9 @@ public class HomeDetailController implements Serializable {
 
     private Long jumlahKomentar;
     private List<Komentar> komentars;
+    
+    private Map<String, List<Komentar>> jawabanMap;
+    
     private Komentar komentar;
     private Artikel artikel;
 
@@ -49,8 +55,15 @@ public class HomeDetailController implements Serializable {
         artikel = artikelService.findById(artikelId);
         jumlahKomentar = artikelService.countKomentar(artikel);
         komentars = komentarService.findByArtikel(artikel);
+        
+        jawabanMap = new LinkedHashMap<>();
+        for (Komentar kom : komentars) {
+            List<Komentar> jawabans = komentarService.findJawabanKomentar(kom);
+            jawabanMap.put(kom.getId(), jawabans);
+        }
 
         komentar = new Komentar();
+        komentar.setJenis(0);
 
     }
 
@@ -82,8 +95,11 @@ public class HomeDetailController implements Serializable {
             jumlahKomentar = artikelService.countKomentar(artikel);
 
             komentars.add(komentar);
+            jawabanMap.put(komentar.getId(), new ArrayList<>());
 
             komentar = new Komentar();
+            komentar.setJenis(0);
+            
 
             FacesContext
                     .getCurrentInstance()
@@ -98,6 +114,24 @@ public class HomeDetailController implements Serializable {
 
     public Komentar getKomentar() {
         return komentar;
+    }
+
+    public Map<String, List<Komentar>> getJawabanMap() {
+        return jawabanMap;
+    }
+    
+    public void createJawabanKomentar(Komentar ref) {
+        Komentar kom = new Komentar();
+        kom.setJenis(1);
+        kom.setRefKomentarId(ref.getId());
+        kom.setArtikel(artikel);
+        kom.setPengguna(userInfo.getCurrentUser());
+        jawabanMap.get(ref.getId()).add(kom);
+    }
+    
+    public void simpanJawabanKomentar(Komentar jawaban) {
+        komentarService.create(jawaban);
+        jumlahKomentar = artikelService.countKomentar(artikel);
     }
 
 }

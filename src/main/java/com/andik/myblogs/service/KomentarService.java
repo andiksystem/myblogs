@@ -28,8 +28,9 @@ public class KomentarService {
     }
     
     public List<Komentar> findByArtikel(Artikel artikel) {
-        return em.createQuery("SELECT k FROM Komentar k WHERE k.artikel = :artikel ORDER BY k.waktuDibuat DESC")
+        return em.createQuery("SELECT k FROM Komentar k WHERE k.artikel = :artikel AND k.jenis = :jenis ORDER BY k.waktuDibuat DESC")
                 .setParameter("artikel", artikel)
+                .setParameter("jenis", 0)
                 .getResultList();
     }
     
@@ -45,6 +46,13 @@ public class KomentarService {
     
     public void remove(Komentar komentar) {
         em.remove(em.merge(komentar));
+    }
+
+    public List<Komentar> findJawabanKomentar(Komentar kom) {
+        return em.createQuery("SELECT k FROM Komentar k WHERE k.refKomentarId = :ref AND k.jenis = :jenis ORDER BY k.waktuDibuat ASC")
+                .setParameter("ref", kom.getId())
+                .setParameter("jenis", 1)
+                .getResultList();
     }
     
 }

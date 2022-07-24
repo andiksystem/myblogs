@@ -14,7 +14,7 @@ body {
 }
 
 .wrapper-panel {
-    
+
 }
 
 .sidebar {
@@ -44,7 +44,7 @@ body {
 
 .thumb-judul-artikel a {
     font-size: 24px;
-    font-weight: 600;    
+    font-weight: 600;
 }
 
 p {
@@ -128,5 +128,24 @@ p {
 }
 
 .item-komentar-isi {
-    
+    margin-bottom: 16px;
+}
+
+.item-jawaban-pengirim {
+    font-size: 14px;
+    color: #0066cc;
+}
+
+.item-jawaban {
+    padding: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 64px;
+}
+
+.item-komentar-button {
+    text-align: right;
+    float: right;
+    width: 120px;
 }
